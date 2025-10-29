@@ -1,7 +1,11 @@
+'use client';
 import { StorageService } from '@/types/services/storage';
 
 export class LocalStorageService implements StorageService {
   getItem<T>(key: string): T | null {
+    if (!localStorage) {
+      return null;
+    }
     try {
       const item = localStorage.getItem(key);
       return item ? JSON.parse(item) : null;

@@ -1,7 +1,7 @@
 'use client';
 
 import { Flex, Text, Box, SkeletonText } from '@chakra-ui/react';
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import { formatNumber } from '@/helpers/format';
 import { UnifiedMarketData } from '@/types/adapter.types';
@@ -18,7 +18,13 @@ interface Props {
 }
 
 export function Ticker({ ticker }: Props) {
-  if (!ticker?.price) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
+
+  if (!ticker?.price || !mounted) {
     return <SkeletonText noOfLines={1} />
   }
 
@@ -27,14 +33,16 @@ export function Ticker({ ticker }: Props) {
   return (
     <Flex gap={8} alignItems="center">
       {/* 最新价 */}
-      <Box>
-        <Text fontSize="sm" fontWeight="bold" color={getChangeColor(priceChangePercent)}>
-          {formatNumber(ticker?.price ?? '--', { precision: 2 })}
-        </Text>
-        <Text fontSize="xs" color={getChangeColor(priceChangePercent)}>
-          {priceChangePercent > 0 ? '+' : ''}{formatNumber(priceChangePercent, { precision: 2 })}%
-        </Text>
-      </Box>
+      { mounted && (
+        <Box>
+          <Text fontSize="sm" fontWeight="bold" color={getChangeColor(priceChangePercent)}>
+            {formatNumber(ticker?.price ?? '--', { precision: 2 })}
+          </Text>
+          <Text fontSize="xs" color={getChangeColor(priceChangePercent)}>
+            {priceChangePercent > 0 ? '+' : ''}{formatNumber(priceChangePercent, { precision: 2 })}%
+          </Text>
+        </Box>
+      ) }
 
       {/* 24h 最高价 */}
       <Flex gap={8} hideBelow="md">

@@ -7,6 +7,7 @@ import { useLongPnl } from '@/hooks/useLongPnl';
 import { LongPosition } from '@/types/services/pnl-calculator';
 
 import { TradeOrder } from '@/types/trade';
+import Empty from '@/components/Empty';
 
 interface PnlRowProps {
   position: LongPosition;
@@ -50,10 +51,10 @@ export const Positions: React.FC<{
         <Table.Body>
           {datasource.map((position) => (
             <Table.Row key={position.id} width="full" bg="transparent">
-              <Table.Cell>{position.symbol}</Table.Cell>
-              <Table.Cell>{position.price}</Table.Cell>
-              <Table.Cell>{position.amount}</Table.Cell>
-              <Table.Cell textAlign='end'>
+              <Table.Cell aria-label="交易币对">{position.symbol}</Table.Cell>
+              <Table.Cell aria-label="开仓价格">{position.price}</Table.Cell>
+              <Table.Cell aria-label="持仓数量">{position.amount}</Table.Cell>
+              <Table.Cell aria-label="未实现盈亏" textAlign='end'>
                 {marketPrice ? (
                   <PnlRow
                     position={{
@@ -71,6 +72,9 @@ export const Positions: React.FC<{
           ))}
         </Table.Body>
       </Table.Root>
+      {datasource.length === 0 && (
+        <Empty />
+      )}
     </Box>
   );
 };

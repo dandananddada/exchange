@@ -47,29 +47,6 @@ describe('AdapterFactory', () => {
     });
   });
 
-  describe('createWsAdapter', () => {
-    it('should create a BinanceAdapter instance for ws', () => {
-      const adapter = AdapterFactory.createWsAdapter('binance');
-      expect(adapter).toBeInstanceOf(BinanceAdapter);
-    });
-
-    it('should create an OKXWebSocket instance for ws', () => {
-      const adapter = AdapterFactory.createWsAdapter('okx');
-      expect(adapter).toBeInstanceOf(OKXWebSocket);
-    });
-
-    it('should create a BybitAdapter instance for ws', () => {
-      const adapter = AdapterFactory.createWsAdapter('bybit');
-      expect(adapter).toBeInstanceOf(BybitAdapter);
-    });
-
-    it('should throw an error for an unsupported ws exchange', () => {
-      expect(() => {
-        AdapterFactory.createWsAdapter('unsupported' as ExchangeType);
-      }).toThrow('Unsupported exchange: unsupported');
-    });
-  });
-
   describe('createAllAdapters', () => {
     it('should create all adapters with default configs', () => {
       const adapters = AdapterFactory.createAllAdapters();

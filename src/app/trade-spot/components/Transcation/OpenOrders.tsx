@@ -3,6 +3,7 @@
 import { Box, Table } from '@chakra-ui/react';
 
 import { TradeOrder } from '@/types/trade';
+import Empty from '@/components/Empty';
 
 export const OpenOrders: React.FC<{
   datasource: TradeOrder[]
@@ -23,14 +24,17 @@ export const OpenOrders: React.FC<{
         <Table.Body>
           {datasource.map((item) => (
             <Table.Row key={item.id} bg="transparent">
-              <Table.Cell>{item.symbol}</Table.Cell>
-              <Table.Cell>{item.side === 'buy' ? '买入' : '卖出'}</Table.Cell>
-              <Table.Cell>{item.price}</Table.Cell>
-              <Table.Cell textAlign="end">{item.amount}</Table.Cell>
+              <Table.Cell aria-label="交易币对">{item.symbol}</Table.Cell>
+              <Table.Cell aria-label="交易方向">{item.side === 'buy' ? '买入' : '卖出'}</Table.Cell>
+              <Table.Cell aria-label="价格">{item.price}</Table.Cell>
+              <Table.Cell aria-label="数量" textAlign="end">{item.amount}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
       </Table.Root>
+      {datasource.length === 0 && (
+        <Empty />
+      )}
     </Box>
   );
 }

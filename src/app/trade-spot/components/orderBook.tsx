@@ -41,7 +41,7 @@ export default function OrderBookClient({ symbol, limit = 20, depth = 100 }: Pro
   const { data: wsRes } = usePublicSubscribe<OKXOrderBook[]>({
     channel: 'books',
     params: { instId: symbol, sz: depth },
-    enabled: false,
+    enabled: true,
     onMessage: (incoming) => {
       // 300ms 截流：记录最新消息，仅在窗口结束时提交一次
       lastMsgRef.current = incoming as OKXOrderBook[];
@@ -49,7 +49,7 @@ export default function OrderBookClient({ symbol, limit = 20, depth = 100 }: Pro
         timerRef.current = window.setTimeout(() => {
           setWsResThrottled(lastMsgRef.current);
           timerRef.current = null;
-        }, 1000);
+        }, 300);
       }
     },
   });
