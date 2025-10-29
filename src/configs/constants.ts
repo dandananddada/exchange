@@ -1,0 +1,1 @@
+export const DOMAIN = 'https://www.okx.com/api/v5/public';
