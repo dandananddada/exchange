@@ -22,13 +22,16 @@ export default function KlineChartWrapper({ symbol, interval }: { symbol: string
   const { data: wsData = [] } = useBusinessSubscribe<[]>({
     channel: `candle${currentInterval}`,
     params: { instId: symbol },
-    enabled: false,
+    enabled: true,
   });
 
   const chartData = useMemo(() => {
+    if (!data.length) {
+      return [];
+    }
     return [
-      ...wsData,
       ...data,
+      ...wsData,
     ]
   }, [data, wsData]);
 

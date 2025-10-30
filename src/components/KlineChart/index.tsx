@@ -208,11 +208,17 @@ export default function KlineChart({
         if (!mounted) return;
         const raw = Array.isArray(data) ? data : [];
 
-        // format data and sort by time ascending
-        const candlesticks = raw
-          .map(toCandlestickData)
-          .filter((v): v is CandlestickData => v !== null)
-          .sort((a, b) => Number(a.time) - Number(b.time));
+        // format data, dedupe by time, and sort by time ascending
+        const candlesticks = Array.from(
+          raw
+            .map(toCandlestickData)
+            .filter((v): v is CandlestickData => v !== null)
+            .reduce((map, candle) => {
+              map.set(candle.time, candle); // Use the latest candle for a given time
+              return map;
+            }, new Map<Time, CandlestickData>())
+            .values() // unique by time
+        ).sort((a, b) => Number(a.time) - Number(b.time));
 
         seriesRef.current?.setData(candlesticks);
       } catch (err: unknown) {

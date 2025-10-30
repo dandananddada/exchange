@@ -39,15 +39,7 @@ export class OKXAdapter extends BaseAdapter {
       `/api/v5/market/candles?instId=${symbol}&bar=${interval}&limit=${limit}`
     );
 
-    return this.applyResponseInterceptors('getKlines', data.data.map((kline: string[]) => ({
-      timestamp: kline[0],
-      open: parseFloat(kline[1]),
-      high: parseFloat(kline[2]),
-      low: parseFloat(kline[3]),
-      close: parseFloat(kline[4]),
-      volume: parseFloat(kline[5]),
-      volumeCurrency: parseFloat(kline[6])
-    })));
+    return this.applyResponseInterceptors('getKlines', data.data);
   }
 
   async getOrderBook(symbol: string, limit: number = 20): Promise<unknown> {
