@@ -52,9 +52,7 @@ export default function ResponsiveTradingLayout({
             lg: 'block', // 桌面显示
           }}
         >
-          <Box textAlign='center'>
-            {placeOrder}
-          </Box>
+          {placeOrder}
         </Box>
       </Grid>
 

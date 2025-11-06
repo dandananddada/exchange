@@ -8,7 +8,6 @@ const ThemeSwitch = ({
   theme: Theme['mode'];
   setTheme: (theme: Theme['mode']) => void;
 }) => {
-  console.log('ThemeSwitch current theme:', theme);
   return (
     <Tabs.Root
       size="sm"

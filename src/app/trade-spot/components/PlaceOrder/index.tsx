@@ -186,7 +186,7 @@ export default function PlaceOrder({
   };
 
   return (
-    <Box w='100%' maxW='420px' p={2} pt={0}>
+    <Box w='100%' p={2} pt={0}>
       <TabsRoot
         size='sm'
         value={activeSide}
