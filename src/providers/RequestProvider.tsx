@@ -15,7 +15,6 @@ const RequestProvider: React.FC<PropsWithChildren<SWRProviderProps>> = ({ childr
     fetcher: fetcher,
     // dedupingInterval 仅用于去重同键在一定时间内的重复请求，不是轮询
     dedupingInterval: 2000,
-    // 彻底不轮询：将 refreshInterval 设为 0（或不设置），并关闭焦点与重连时的自动校验
     refreshInterval: 0,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,

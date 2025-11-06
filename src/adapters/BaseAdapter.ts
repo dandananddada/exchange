@@ -17,7 +17,6 @@ export abstract class BaseAdapter implements IExchangeAdapter {
   protected responseInterceptors: Map<string, ResponseInterceptor> = new Map();
   protected baseURL: string = '';
   
-  // 默认请求配置
   protected defaultRequestConfig: RequestConfig = {
     timeout: 10000,
     retryCount: 3,
@@ -32,7 +31,6 @@ export abstract class BaseAdapter implements IExchangeAdapter {
     }
   }
 
-  // 响应拦截器管理
   addResponseInterceptor<T, R>(endpoint: string, interceptor: ResponseInterceptor<T, R>): void {
     this.responseInterceptors.set(endpoint, interceptor as ResponseInterceptor);
   }
@@ -45,7 +43,6 @@ export abstract class BaseAdapter implements IExchangeAdapter {
     this.responseInterceptors.clear();
   }
 
-  // 应用响应拦截器
   protected applyResponseInterceptors<T, R>(endpoint: string, data: T): R {
     const interceptor = this.responseInterceptors.get(endpoint);
     if (interceptor) {
@@ -64,12 +61,10 @@ export abstract class BaseAdapter implements IExchangeAdapter {
     return { ...this.config };
   }
 
-  // 子类可以重写的方法
   protected onConfigUpdate(): void {
     // 配置更新时的回调
   }
 
-  // 通用的 HTTP 请求方法
   protected async request<T>(
     endpoint: string,
     options: RequestInit = {}
@@ -118,7 +113,6 @@ export abstract class BaseAdapter implements IExchangeAdapter {
     return this.request(endpoint, options);
   }
 
-  // 抽象方法 - 子类必须实现
   abstract getTicker(symbol: string): Promise<UnifiedMarketData>;
   abstract getKlines(symbol: string, interval: string, limit?: number): Promise<unknown[]>;
   abstract getOrderBook(symbol: string, limit?: number): Promise<unknown>;

@@ -24,9 +24,8 @@ export class LongPnlCalculator {
     // calc fee
     let fees = 0;
     if (includeFees) {
-      const openFee = initialValue * feeRate;
       const closeFee = currentValue * feeRate;
-      fees = openFee + closeFee;
+      fees = closeFee;
     }
 
     const unrealizedPnl = leveragedPnl - fees;

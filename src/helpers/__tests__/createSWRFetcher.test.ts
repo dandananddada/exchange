@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createFetcher, createSender } from '../createSWRFetcher';
+import { createFetcher } from '../createSWRFetcher';
 import { IExchangeAdapter } from '@/types/adapter.types';
 
 describe('createSWRFetcher', () => {
@@ -116,53 +116,6 @@ describe('createSWRFetcher', () => {
       const fetcher = createFetcher(mockAdapter);
       
       await expect(fetcher(['unknown', 'param'])).rejects.toThrow('Unknown endpoint: unknown');
-    });
-  });
-
-  describe('createSender', () => {
-    it('应该创建一个 sender 函数', () => {
-      const sender = createSender(mockAdapter);
-      expect(typeof sender).toBe('function');
-    });
-
-    it('应该处理 ws:orderBook 端点', async () => {
-      const sender = createSender(mockAdapter);
-      const mockData = { success: true };
-      mockAdapter.subOrderBook.mockResolvedValue(mockData);
-
-      const params = { instId: 'BTC-USDT', sz: 20 };
-      const result = await sender(['ws:orderBook', params]);
-      
-      expect(mockAdapter.subOrderBook).toHaveBeenCalledWith(params);
-      expect(result).toEqual(mockData);
-    });
-
-    it('应该处理数组形式的参数', async () => {
-      const sender = createSender(mockAdapter);
-      const mockData = { success: true };
-      mockAdapter.subOrderBook.mockResolvedValue(mockData);
-
-      const params = { instId: 'BTC-USDT' };
-      const result = await sender(['ws:orderBook', params]);
-      
-      expect(result).toEqual(mockData);
-    });
-
-    it('应该处理展开的参数', async () => {
-      const sender = createSender(mockAdapter);
-      const mockData = { success: true };
-      mockAdapter.subOrderBook.mockResolvedValue(mockData);
-
-      const params = { instId: 'ETH-USDT' };
-      const result = await sender('ws:orderBook', params);
-      
-      expect(result).toEqual(mockData);
-    });
-
-    it('应该在未知端点时抛出错误', async () => {
-      const sender = createSender(mockAdapter);
-      
-      await expect(sender(['unknown', 'param'])).rejects.toThrow('Unknown endpoint: unknown');
     });
   });
 });

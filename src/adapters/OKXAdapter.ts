@@ -1,4 +1,3 @@
-// adapters/OKXAdapter.ts
 import { BaseAdapter } from './BaseAdapter';
 import { 
   UnifiedMarketData, 

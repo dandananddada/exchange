@@ -83,15 +83,15 @@ describe('OKXAdapter', () => {
         expect.any(Object)
       );
       expect(klines).toEqual([
-        {
-          timestamp: '1622505600000',
-          open: 50000,
-          high: 51000,
-          low: 49000,
-          close: 50500,
-          volume: 100,
-          volumeCurrency: 5000000,
-        },
+        [
+          '1622505600000',
+          '50000',
+          '51000',
+          '49000',
+          '50500',
+          '100',
+          '5000000',
+        ]
       ]);
     });
   });

@@ -35,7 +35,8 @@ export default function VirtualList<T extends { id?: string }>({ items, height, 
   }, []);
 
   const startIndex = Math.max(0, Math.floor(scrollTop / rowHeight) - overscan);
-  const endIndex = Math.min(items.length - 1, Math.ceil((scrollTop + height) / rowHeight) + overscan - 1);
+  // Math.ceil((scrollTop + height) / rowHeight) - 1, - 1 fix for Math.ceil get broken index
+  const endIndex = Math.min(items.length - 1, Math.ceil((scrollTop + height) / rowHeight) - 1 + overscan);
 
   const visible = items.slice(startIndex, Math.max(startIndex, endIndex + 1));
 
